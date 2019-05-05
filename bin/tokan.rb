@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-require './interpreter.rb'
-require './parser.rb'
-
+require './src/interpreter.rb'
+require './src/parser.rb'
 
 # Main
 

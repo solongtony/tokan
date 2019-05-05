@@ -1,7 +1,7 @@
-require './expressions/add.rb'
-require './expressions/identifier.rb'
-require './expressions/number.rb'
-require './expressions/var.rb'
+require './src/expressions/add.rb'
+require './src/expressions/identifier.rb'
+require './src/expressions/number.rb'
+require './src/expressions/var.rb'
 
 class Parser
   # TODO: track lines and characters.

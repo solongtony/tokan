@@ -1,4 +1,4 @@
-require './expressions/expression.rb'
+require './src/expressions/expression.rb'
 
 # Binary add function
 # e.g. add(12, 14)

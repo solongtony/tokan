@@ -1,4 +1,4 @@
-require './expressions/expression.rb'
+require './src/expressions/expression.rb'
 
 class Var < Expression
   attr_reader :identifier
