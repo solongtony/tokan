@@ -2,4 +2,8 @@
 
 A toy language.  Pronounced like toucan.
 
-Run the example with `./run.rb example.tkn`
+## Run the example
+```
+cd src
+./run.rb ../example.tkn
+```
