@@ -4,10 +4,7 @@ require 'JSON'
 require 'set'
 
 require './parser.rb'
-require './expressions/add.rb'
-require './expressions/identifier.rb'
-require './expressions/number.rb'
-require './expressions/var.rb'
+
 
 # Verify and remove a specific token from tokens.
 def gobble(tokens, value, error_message)
@@ -21,16 +18,6 @@ end
 filename = ARGV[0]
 
 parser = Parser.new
-
-IDENTIFIER_RE = /^[a-zA-Z_][a-zA-Z0-9_]*$/
-NUMBER_RE = /^[0-9]+$|^[0-9]+\.[0-9]+$/
-
-MATCHERS = {
-  /add/ => Add,
-  /var/ => Var,
-  NUMBER_RE => Number,
-  IDENTIFIER_RE => Identifier
-}
 
 # Each line must be a valid expression, no continued lines.
 File.open(filename).each do |line|

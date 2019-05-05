@@ -1,10 +1,13 @@
 class Var
   attr_reader :identifier
   attr_reader :value
-
   def initialize(identifier, value)
     @identifier = identifier
     @value = value
+  end
+
+  def self.matcher
+    /var/
   end
 
   def self.parse(tokens, parser)

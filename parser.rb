@@ -1,5 +1,17 @@
+require './expressions/add.rb'
+require './expressions/identifier.rb'
+require './expressions/number.rb'
+require './expressions/var.rb'
+
 class Parser
   # TODO: track lines and characters.
+
+  MATCHERS = {
+    Add.matcher => Add,
+    Var.matcher => Var,
+    Number.matcher => Number,
+    Identifier.matcher => Identifier
+  }
 
   attr_reader :program
   def initialize

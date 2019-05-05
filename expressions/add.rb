@@ -3,10 +3,13 @@
 class Add
   attr_reader :rand1
   attr_reader :rand2
-
   def initialize(rand1, rand2)
     @rand1 = rand1
     @rand2 = rand2
+  end
+
+  def self.matcher
+    /add/
   end
 
   def self.parse(tokens, parser)
