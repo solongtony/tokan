@@ -1,0 +1,21 @@
+0.33
+
+var foo = 9
+var bar=123
+var Foo = 0.99
+var bar2 = 2
+var foo_bar = 99.99
+var _foo = 3000
+
+foo
+bar
+Foo
+bar2
+foo_bar
+_foo
+
+add(3, 5)
+add(12.1,19.01)
+add( 11.5, 21 )
+
+add(foo, bar)
