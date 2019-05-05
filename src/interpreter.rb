@@ -11,6 +11,7 @@ class Interpreter
   end
 
   def interpret(exp)
+    # TODO: don't use strings for types
     case exp.class.name
     when 'Add'
       interpret(exp.rand1) + interpret(exp.rand2)
@@ -24,8 +25,8 @@ class Interpreter
       else
         exp.value.to_i
       end
-    when 'Var'
-      raise Exception.new("Variable '#{exp.identifier.name}' already defined") if env.key?(exp.identifier.name)
+    when 'Val'
+      raise Exception.new("Value '#{exp.identifier.name}' already defined") if env.key?(exp.identifier.name)
       env[exp.identifier.name] = interpret(exp.value)
     else
       raise Exception.new("Unkown exp type #{exp.class}")

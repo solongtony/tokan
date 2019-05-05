@@ -1,20 +1,21 @@
 require './src/expressions/add.rb'
 require './src/expressions/identifier.rb'
 require './src/expressions/number.rb'
-require './src/expressions/var.rb'
+require './src/expressions/val.rb'
 
 class Parser
   # TODO: track lines and characters.
 
   MATCHERS = {
     Add.matcher => Add,
-    Var.matcher => Var,
+    Val.matcher => Val,
     Number.matcher => Number,
     Identifier.matcher => Identifier
   }
 
   # discarded from input
   IGNORED_DELIMITERS = '\s'
+  
   # turned into tokens themselves
   KEPT_DELIMITERS = ',=\(\)'
 
