@@ -50,32 +50,21 @@ class Identifier
 end
 
 class Var
-  attr_reader :name
+  attr_reader :identifier
   attr_reader :value
 
-  def initialize(name, value)
-    @name = name
+  def initialize(identifier, value)
+    @identifier = identifier
     @value = value
   end
-
-  # def to_s
-  #   "#<Var:#{@name},#{@value}>"
-  # end
 
   def self.parse(tokens, parser)
     #parse "Var.parse #{tokens.first(4)}"
     gobble(tokens, 'var', "Expecting var, got #{tokens.first}")
-
-    # TODO: use Identifier.prase for the first token.
-    if tokens.first =~ IDENTIFIER_RE
-      name = tokens.shift
-      #parse "Var.parse name #{name}"
-      gobble(tokens, '=', "Expecting '=' for var, got #{tokens.first}")
-      value = parser.parse(tokens)
-      Var.new(name, value)
-    else
-      raise Exception.new("Invalid identifier #{tokens.first}")
-    end
+    identifier = Identifier.parse(tokens, parser)
+    gobble(tokens, '=', "Expecting '=' for var, got #{tokens.first}")
+    value = parser.parse(tokens)
+    Var.new(identifier, value)
   end
 
 end
@@ -86,10 +75,6 @@ class Number
   def initialize(value)
     @value = value
   end
-
-  # def to_s
-  #   "#<Number:#{@value}>"
-  # end
 
   def self.parse(tokens, parser)
     #puts "Number.parse #{tokens.first}"
