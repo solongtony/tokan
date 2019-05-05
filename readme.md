@@ -6,3 +6,8 @@ A toy language.  Pronounced like toucan.
 ```
 bin/tokan.rb example.tkn
 ```
+
+## Run the Repl
+```
+bin/repl.rb
+```
