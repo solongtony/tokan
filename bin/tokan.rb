@@ -3,14 +3,13 @@
 require './src/interpreter.rb'
 require './src/parser.rb'
 
-# Main
-
-filename = ARGV[0]
+# Parse a code file into a program,
+# then execute the program.
 
 program = []
 
 # Each line must be a valid expression, no continued lines.
-File.open(filename).each do |line|
+ARGF.each do |line|
   line.strip!
   next if line.empty?
   tokens = Parser.tokenize(line)
@@ -18,9 +17,14 @@ File.open(filename).each do |line|
   program << Parser.parse(tokens)
 end
 
-puts "Program: #{program}"
+puts "Program:"
+program.each { |e| puts e.inspect}
+puts
 
 interpreter = Interpreter.new
+puts "Output:"
 interpreter.execute(program)
+puts
 
+puts "Environment:"
 puts interpreter.env
