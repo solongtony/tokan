@@ -1,10 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'JSON'
-require 'set'
-
+require './interpreter.rb'
 require './parser.rb'
-
 
 # Verify and remove a specific token from tokens.
 def gobble(tokens, value, error_message)
@@ -17,13 +14,15 @@ end
 
 filename = ARGV[0]
 
-parser = Parser.new
+@program = []
 
 # Each line must be a valid expression, no continued lines.
 File.open(filename).each do |line|
-  tokens = parser.tokenize(line)
-  puts "tokens #{tokens}"
-  parser.parse_all(tokens)
+  tokens = Parser.tokenize(line)
+  # puts "tokens #{tokens}"
+  @program << Parser.parse(tokens)
 end
 
-puts "parser.program #{parser.program}"
+puts "Program: #{@program}"
+
+interpreter = Interpreter.new

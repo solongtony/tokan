@@ -13,34 +13,19 @@ class Parser
     Identifier.matcher => Identifier
   }
 
-  attr_reader :program
-  def initialize
-    @program = []
-    #puts "Parser.initialize @program: #{@program}"
-  end
-
   # discarded from input
   IGNORED_DELIMITERS = '\s'
   # turned into tokens themselves
   KEPT_DELIMITERS = ',=\(\)'
-  def tokenize(text)
+
+  def self.tokenize(text)
     # More than one delimiter in a row can create empty tokens.
     text
     .split(%r{#{IGNORED_DELIMITERS}|([#{KEPT_DELIMITERS}])})
     .delete_if { |t| t == "" }
   end
 
-  def parse_all(tokens)
-    #puts "Parser.parse @program: #{@program}"
-    # Using a loop instead of recursion to avoid stack growth.
-    #puts "parse #{tokens}"
-    while !tokens.empty?
-      @program << parse(tokens)
-    end
-    @program
-  end
-
-  def parse(tokens)
+  def self.parse(tokens)
     #puts "parse #{tokens}"
     node = nil
     MATCHERS.each do |matcher, type|
