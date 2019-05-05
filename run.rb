@@ -23,3 +23,5 @@ puts "Program: #{program}"
 
 interpreter = Interpreter.new
 interpreter.execute(program)
+
+puts interpreter.env
