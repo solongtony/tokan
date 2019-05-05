@@ -11,6 +11,6 @@ class Number < Expression
   end
 
   def self.parse(tokens, parser)
-    Number.new(tokens.shift)
+    parser.output_queue.enqueue(Number.new(tokens.shift))
   end
 end

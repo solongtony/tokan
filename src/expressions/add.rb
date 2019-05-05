@@ -16,11 +16,19 @@ class Add < Expression
 
   def self.parse(tokens, parser)
     gobble(tokens, 'add', "Expecting 'add' got #{tokens.first}")
+
     gobble(tokens, '(', "Expecting '(' for add got #{tokens.first}")
-    rand1 = parser.parse(tokens)
+
+    parser.parse_expression(tokens)
+    rand1 = parser.output_queue.dequeue
+
     gobble(tokens, ',', "Expecting ',' for add got #{tokens.first}")
-    rand2 = parser.parse(tokens)
+
+    parser.parse_expression(tokens)
+    rand2 = parser.output_queue.dequeue
+
     gobble(tokens, ')', "Expecting ')' for add got #{tokens.first}")
-    Add.new(rand1, rand2)
+
+    parser.output_queue.enqueue(Add.new(rand1, rand2))
   end
 end

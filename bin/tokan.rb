@@ -5,16 +5,24 @@ require './src/parser.rb'
 
 # Parse a code file into a program,
 # then execute the program.
+# Each line must be a valid expression, no continued lines.
 
 program = []
+line_number = 0
 
-# Each line must be a valid expression, no continued lines.
 ARGF.each do |line|
-  line.strip!
-  next if line.empty?
-  tokens = Parser.tokenize(line)
-  # puts "tokens #{tokens}"
-  program << Parser.parse(tokens)
+  begin
+    line_number += 1
+    line.strip!
+    next if line.empty?
+
+    tokens = Parser.tokenize(line)
+    parser = Parser.new
+    program << parser.parse(tokens)
+  rescue Exception => e
+    puts "Error on line #{line_number}: #{line}"
+    raise e
+  end
 end
 
 puts "Program:"

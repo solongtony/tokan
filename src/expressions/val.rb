@@ -14,9 +14,15 @@ class Val < Expression
 
   def self.parse(tokens, parser)
     gobble(tokens, 'val', "Expecting val, got #{tokens.first}")
-    identifier = Identifier.parse(tokens, parser)
+
+    Identifier.parse(tokens, parser)
+    identifier = parser.output_queue.dequeue
+
     gobble(tokens, '=', "Expecting '=' for val, got #{tokens.first}")
-    value = parser.parse(tokens)
-    Val.new(identifier, value)
+
+    parser.parse_expression(tokens)
+    value = parser.output_queue.dequeue
+
+    parser.output_queue.enqueue(Val.new(identifier, value))
   end
 end

@@ -11,6 +11,6 @@ class Identifier < Expression
   end
 
   def self.parse(tokens, parser)
-    Identifier.new(tokens.shift)
+    parser.output_queue.enqueue(Identifier.new(tokens.shift))
   end
 end
