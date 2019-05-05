@@ -1,4 +1,6 @@
-class Var
+require './expressions/expression.rb'
+
+class Var < Expression
   attr_reader :identifier
   attr_reader :value
   def initialize(identifier, value)

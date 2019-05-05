@@ -1,6 +1,8 @@
+require './expressions/expression.rb'
+
 # Binary add function
 # e.g. add(12, 14)
-class Add
+class Add < Expression
   attr_reader :rand1
   attr_reader :rand2
   def initialize(rand1, rand2)

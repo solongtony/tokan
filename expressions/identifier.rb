@@ -1,4 +1,6 @@
-class Identifier
+require './expressions/expression.rb'
+
+class Identifier < Expression
   attr_reader :name
   def initialize(name)
     @name = name

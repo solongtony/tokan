@@ -1,4 +1,6 @@
-class Number
+require './expressions/expression.rb'
+
+class Number < Expression
   attr_reader :value
   def initialize(value)
     @value = value
