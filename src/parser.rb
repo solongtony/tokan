@@ -12,25 +12,12 @@ class Parser
     @operator_stack = RealStack.new
   end
 
-  MATCHERS = {
-    Add.matcher => Add,
-    Val.matcher => Val,
-    Number.matcher => Number,
-    Identifier.matcher => Identifier
+  EXPRESSION_TYPES = {
+    add: Add,
+    val: Val,
+    number: Number,
+    identifier: Identifier
   }
-
-  # discarded from input
-  IGNORED_DELIMITERS = '\s'
-
-  # turned into tokens themselves
-  KEPT_DELIMITERS = ',=\(\)'
-
-  def self.tokenize(text)
-    # More than one delimiter in a row can create empty tokens.
-    text
-    .split(%r{#{IGNORED_DELIMITERS}|([#{KEPT_DELIMITERS}])})
-    .delete_if { |t| t == "" }
-  end
 
   def parse(tokens)
     # Using a loop instead of recursion to avoid stack growth.
@@ -54,26 +41,18 @@ class Parser
     result
   end
 
+  # TODO: use a buffered stream of tokens.
+  # The parser can look as far ahead as it likes,
+  # any token viewed will be cached in the buffer.
   # Results of parsing are pushed onto the output_queue
-  def parse_expression(tokens)
-    # node = nil
-    found_matcher = false
-    MATCHERS.each do |matcher, type|
-      if  matcher =~ tokens.first
-        type.parse(tokens, self)
-        found_matcher = true
-        break
-      end
+  def parse_expression(token_queue)
+    token = tokens.peek
+    expression_class = EXPRESSION_TYPES[token.type]
+    unless expression_class
+      raise Exception.new("No expression for #{token}")
     end
-
-    unless found_matcher
-      raise Exception.new("No token matcher matched #{tokens.first}")
-    end
-
-    # unless node
-    #   raise Exception.new("Failed to parse, next tokens: #{tokens.first(3)}")
-    # end
-    #
-    # output_queue.enqueue(node)
+    # TODO:
+    expression_class.parse(tokens, self)
   end
+
 end
