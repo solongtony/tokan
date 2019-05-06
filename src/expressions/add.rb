@@ -10,10 +10,6 @@ class Add < Expression
     @rand2 = rand2
   end
 
-  def self.matcher
-    /add/
-  end
-
   def self.parse(tokens, parser)
     gobble(tokens, 'add', "Expecting 'add' got #{tokens.first}")
 

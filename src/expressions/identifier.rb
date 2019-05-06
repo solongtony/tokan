@@ -6,10 +6,6 @@ class Identifier < Expression
     @name = name
   end
 
-  def self.matcher
-    /^[a-zA-Z_][a-zA-Z0-9_]*$/
-  end
-
   def self.parse(tokens, parser)
     parser.output_queue.enqueue(Identifier.new(tokens.shift))
   end

@@ -8,10 +8,6 @@ class Val < Expression
     @value = value
   end
 
-  def self.matcher
-    /val/
-  end
-
   def self.parse(tokens, parser)
     gobble(tokens, 'val', "Expecting val, got #{tokens.first}")
 
