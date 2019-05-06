@@ -16,6 +16,7 @@ ARGF.each do |line|
     line.strip!
     next if line.empty?
 
+    # TODO: use TokenStream, handle EOF tokens.
     tokens = Parser.tokenize(line)
     parser = Parser.new
     program << parser.parse(tokens)
