@@ -21,3 +21,5 @@ add( 11.5, 21 )
 add(foo, bar)
 
 val baz = add(77, add(add(foo, bar), add(Foo, bar2)))
+
+val start = val count = 0
