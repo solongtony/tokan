@@ -1,6 +1,10 @@
 require './src/expressions/expression.rb'
 
-class Val < Expression
+# This compound expression does not extract any token values itself.
+# It uses Identifier.parse and parser.parse_expression to get values.
+class Val
+  extend Expression
+
   attr_reader :identifier
   attr_reader :value
   def initialize(identifier, value)
@@ -8,15 +12,15 @@ class Val < Expression
     @value = value
   end
 
-  def self.parse(tokens, parser)
-    gobble(tokens, 'val', "Expecting val, got #{tokens.first}")
+  def self.parse(token_stream, parser)
+    gobble(token_stream, :val, 'val', "Expecting val, got #{token_stream.peek}")
 
-    Identifier.parse(tokens, parser)
+    Identifier.parse(token_stream, parser)
     identifier = parser.output_queue.dequeue
 
-    gobble(tokens, '=', "Expecting '=' for val, got #{tokens.first}")
+    gobble(token_stream, :equals, '=', "Expecting '=' for val, got #{token_stream.peek}")
 
-    parser.parse_expression(tokens)
+    parser.parse_expression(token_stream)
     value = parser.output_queue.dequeue
 
     parser.output_queue.enqueue(Val.new(identifier, value))

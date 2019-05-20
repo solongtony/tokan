@@ -1,27 +1,26 @@
 #!/usr/bin/env ruby
 
 require './src/interpreter.rb'
+require './src/lexer.rb'
 require './src/parser.rb'
+require './src/token_stream.rb'
 
 # Parse a code file into a program,
 # then execute the program.
 # Each line must be a valid expression, no continued lines.
-
 program = []
-line_number = 0
 
-ARGF.each do |line|
+stream = TokenStream.new(Lexer, ARGF)
+while stream.peek != TokenStream::EOF
   begin
-    line_number += 1
-    line.strip!
-    next if line.empty?
-
-    # TODO: use TokenStream, handle EOF tokens.
-    tokens = Parser.tokenize(line)
     parser = Parser.new
-    program << parser.parse(tokens)
+    parser.parse_expression(stream)
+    expressions = parser.output_queue
+    while expressions.peek
+      program << expressions.dequeue
+    end
   rescue Exception => e
-    puts "Error on line #{line_number}: #{line}"
+    puts "Error on line #{stream.line_number}: #{stream.line}"
     raise e
   end
 end

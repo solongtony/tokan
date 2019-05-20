@@ -41,11 +41,11 @@ class Parser
     result
   end
 
-  # TODO: use a buffered stream of tokens.
+  # Uses a buffered stream of tokens.
   # The parser can look as far ahead as it likes,
   # any token viewed will be cached in the buffer.
   # Results of parsing are pushed onto the output_queue
-  def parse_expression(token_queue)
+  def parse_expression(tokens)
     token = tokens.peek
     expression_class = EXPRESSION_TYPES[token.type]
     unless expression_class
@@ -54,5 +54,4 @@ class Parser
     # TODO:
     expression_class.parse(tokens, self)
   end
-
 end
