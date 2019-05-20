@@ -32,7 +32,7 @@ class RealStack
   end
 
   def peek
-    @store[@top]
+    @store.last
   end
 end
 
@@ -66,5 +66,9 @@ class RealQueue
 
   def empty?
     peek == nil
+  end
+
+  def to_a
+    @store.dup
   end
 end

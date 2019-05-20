@@ -28,6 +28,7 @@ class Lexer
     rparen: /\)/
   }
 
+  # Turn a single chunk into a token.
   def self.tokenize(word)
     token = nil
     MATCHERS.each do |type, matcher|

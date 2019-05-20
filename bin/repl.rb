@@ -2,7 +2,9 @@
 require "readline"
 
 require './src/interpreter.rb'
+require './src/lexer.rb'
 require './src/parser.rb'
+require './src/token_stream.rb'
 
 # Main
 
@@ -19,12 +21,19 @@ while line = Readline.readline("> ", true)
     puts interpreter.env
   else
     # If it's not a control command, parse it as an expression.
-    tokens = Parser.tokenize(line)
-    expression = parser.parse(tokens)
-    begin
-      puts interpreter.interpret(expression)
-    rescue Exception => e
-      puts e.message
+    # Each line must be a complete expression, no multi-line expressions.
+    chunks = Lexer.chunk(line)
+    tokens = chunks.map { |chunk| Lexer.tokenize(chunk) }
+    #expression = parser.parse_expression(TokenStream.new(tokens))
+    expressions = Parser.parse_all(TokenStream.new(tokens))
+
+    expressions.each do |expression|
+      begin
+        puts expression.inspect
+        puts interpreter.interpret(expression)
+      rescue Exception => e
+        puts e.message
+      end
     end
   end
 end

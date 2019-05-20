@@ -8,22 +8,10 @@ require './src/token_stream.rb'
 # Parse a code file into a program,
 # then execute the program.
 # Each line must be a valid expression, no continued lines.
-program = []
+# program = []
 
-stream = TokenStream.new(Lexer, ARGF)
-while stream.peek != TokenStream::EOF
-  begin
-    parser = Parser.new
-    parser.parse_expression(stream)
-    expressions = parser.output_queue
-    while expressions.peek
-      program << expressions.dequeue
-    end
-  rescue Exception => e
-    puts "Error on line #{stream.line_number}: #{stream.line}"
-    raise e
-  end
-end
+stream = BufferedTokenStream.new(Lexer, ARGF)
+program = Parser.parse_all(stream)
 
 puts "Program:"
 program.each { |e| puts e.inspect}
